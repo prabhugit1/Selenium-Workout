@@ -1,0 +1,42 @@
+package automation;
+import java.util.ArrayList;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+public class Windowhandling
+{ 
+public static void main(String[] args) throws Exception 
+{
+	System.setProperty("webdriver.chrome.driver","D:\\SOFTWARE TESTING\\Software\\Chromedriver\\chromedriver.exe");
+	WebDriver driver = new ChromeDriver();
+	driver.manage().window().maximize();
+	driver.get("http://demo.automationtesting.in/Windows.html");
+	
+//Example 1  ( For Seperate windows ) 
+	   driver.findElement(By.linkText("Open New Seperate Windows")).click();
+	   driver.findElement(By.xpath("//*[@id=\"Seperate\"]/button")).click();
+	   ArrayList<String> tab = new ArrayList<String>(driver.getWindowHandles());
+   //First Tab
+	   driver.switchTo().window(tab.get(0));
+	   System.out.println("The First Tab Title is     : " + driver.getTitle());
+   //Second Tab
+       driver.switchTo().window(tab.get(1));Thread.sleep(3000);
+       driver.manage().window().maximize();Thread.sleep(2000);
+       System.out.println("The New Window  Title is   : " + driver.getTitle()+"   & the URL is    :"+driver.getCurrentUrl());
+       driver.close();Thread.sleep(3000);
+       driver.switchTo().window(tab.get(0));
+       
+//Example 2 ( For Multiple windows )
+	driver.findElement(By.linkText("Open Seperate Multiple Windows")).click();
+	driver.findElement(By.xpath("//*[@id=\"Multiple\"]/button")).click();
+	ArrayList<String> tab1 = new ArrayList<String>(driver.getWindowHandles());
+	driver.switchTo().window(tab1.get(1));Thread.sleep(3000);
+			System.out.println("The 3rd page title is     :"+driver.getTitle());
+	driver.switchTo().window(tab1.get(2));Thread.sleep(2000);
+			driver.findElement(By.xpath("//input[@id='email']")).sendKeys("abcd@gmail.com");Thread.sleep(3000);
+			driver.findElement(By.xpath("//*[@id='enterimg']")).click();Thread.sleep(3000);
+			System.out.println("The 2ND Page title is     :"+driver.getTitle());
+	driver.switchTo().window(tab1.get(0));Thread.sleep(3000);
+			System.out.println("The 1st Page title is     :"+driver.getTitle());Thread.sleep(3000);
+	driver.quit();
+}}
