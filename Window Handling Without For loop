@@ -1,0 +1,27 @@
+package automation;
+import java.util.ArrayList;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+public class WindowhandleNoFor
+{ 
+public static void main(String[] args) throws Exception 
+{
+System.setProperty("webdriver.chrome.driver","D:\\SOFTWARE TESTING\\Software\\Chromedriver\\chromedriver.exe");
+WebDriver driver = new ChromeDriver();
+driver.manage().window().maximize();
+
+driver.get("http://demo.guru99.com/popup.php");
+//First Tab
+		driver.findElement(By.linkText("Click Here")).click();
+		System.out.println("The Page title is  :"+driver.getCurrentUrl());
+		ArrayList<String> tab = new ArrayList<String>(driver.getWindowHandles());  //You need to know where you want to use this line
+//Second Tab
+		driver.switchTo().window(tab.get(1));
+		driver.findElement(By.name("emailid")).sendKeys("abcd@gmail.com");
+		driver.findElement(By.xpath("//*[starts-with(@name,'btn')]")).click();Thread.sleep(3000);
+		System.out.println("The Page title is  :"+driver.getCurrentUrl());
+		driver.close();Thread.sleep(3000);
+		driver.quit();
+}
+}
