@@ -1,0 +1,112 @@
+package automation;
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+public class RegisterDemo
+{
+public static void main(String[] args)
+{
+try {
+		System.setProperty("webdriver.chrome.driver","D:\\SOFTWARE TESTING\\Software\\Chromedriver\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("http://demo.automationtesting.in/Register.html");
+	
+//First Name
+		driver.findElement(By.xpath("//*[@placeholder='First Name']")).sendKeys("Test");							  Thread.sleep(2000);																																	
+//Last Name
+		driver.findElement(By.xpath("//*[@placeholder='Last Name']")).sendKeys("Purpose");							Thread.sleep(2000);							
+//Address
+		driver.findElement(By.xpath("//*[@id=\"basicBootstrapForm\"]/div[2]/div/textarea")).sendKeys("No-6,"+"\n"+"Vivekananda Street,"+"\n"+"Dubai Cross Lane,"+"\n"+"Dubai main road,"+"\n"+"Dubai.");Thread.sleep(2000);
+//Email Address	
+		driver.findElement(By.xpath("//input[@type='email']")).sendKeys("abcd@gmail.com");							Thread.sleep(2000);
+//Phone Number		
+		driver.findElement(By.xpath("//input[@type='tel']")).sendKeys("9876543210");							     	Thread.sleep(2000);
+//Gender		
+		driver.findElement(By.xpath("//input[@value='Male']")).click();												          Thread.sleep(2000);
+//Hobbies   
+		List <WebElement> AllCheckboxes = driver.findElements(By.xpath("//input[@type='checkbox']"));	
+	    for(int i = 0; i<3; i++)
+	    	{
+	    	AllCheckboxes.get(i).click();
+	    	}
+//Languages
+        driver.findElement(By.xpath("//*[@id=\"msdd\"]")).click();									
+        List <WebElement> options=driver.findElements(By.xpath("//ul[@class='ui-autocomplete ui-front ui-menu ui-widget ui-widget-content ui-corner-all']/li/a"));
+        for(WebElement element:options)
+           {
+             String value=element.getText();
+             if(value.equalsIgnoreCase("English"))
+                   {
+                   	   element.click();
+                       break;
+                   }
+            }
+        for(WebElement element1:options)
+            {
+              String value1=element1.getText();
+              if(value1.equalsIgnoreCase("Hindi"))
+                   {
+                   	   element1.click();
+                       break;
+                   }
+            }																										                                  	Thread.sleep(3000);
+//Scrolling Webpage by pixel
+        JavascriptExecutor middlescroll=(JavascriptExecutor) driver;
+        middlescroll.executeScript("scrollBy(0,370)");   																            Thread.sleep(3000);
+//Skills
+        Select skills=new Select(driver.findElement(By.xpath("//*[@id=\"Skills\"]")));							Thread.sleep(2000);
+        skills.selectByVisibleText("Java");
+//Country		
+		WebElement country=driver.findElement(By.xpath("//*[@id=\"countries\"]"));										  Thread.sleep(2000);
+		country.click();	
+		country.sendKeys("India");
+//Select Country		
+		driver.findElement(By.xpath("//*[@id=\"basicBootstrapForm\"]/div[10]/div/span/span[1]/span/span[2]")).click();	Thread.sleep(2000);
+		driver.findElement(By.xpath("//input[@class='select2-search__field']")).sendKeys("India");						
+		List <WebElement> country1 =driver.findElements(By.xpath("//*[@id=\"select2-country-results\"]/li"));			
+		for(WebElement ele:country1)
+           {
+             String selectcountry=ele.getText();																		
+             if(selectcountry.equalsIgnoreCase("India"))
+                   {
+                   	   ele.click();
+                       break;
+                   }
+            }
+//Date Of Birth		
+		driver.findElement(By.xpath("//*[@id='yearbox']")).sendKeys("2000");											      Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@ng-model='monthbox']")).sendKeys("January");									Thread.sleep(2000);
+		driver.findElement(By.xpath("//*[@id='daybox']")).sendKeys("1");												        Thread.sleep(2000);
+//Password	
+		driver.findElement(By.xpath("//*[@id='firstpassword']")).sendKeys("Abcd@1234");									Thread.sleep(2000);
+//Confirm Password		
+		driver.findElement(By.xpath("//*[@id='secondpassword']")).sendKeys("Abcd@1234");								Thread.sleep(2000);
+//Scrolling Webpage up fully
+        JavascriptExecutor upscroll=(JavascriptExecutor) driver;															       
+        upscroll.executeScript("window. scrollTo(0,-document. body. scrollHeight)");								Thread.sleep(2000);														
+//Choose File (Right Top)		
+		driver.findElement(By.xpath("//*[@id='imagesrc']")).sendKeys("D:\\Sample image.jpg");						Thread.sleep(2000);										
+//Scrolling webpage down fully
+        JavascriptExecutor downscroll=(JavascriptExecutor) driver;															       
+        downscroll.executeScript("window. scrollTo(0,document. body. scrollHeight)");	
+//Submit
+        Thread.sleep(3000);
+        WebElement sub=driver.findElement(By.xpath("//*[@id='submitbtn']"));
+        sub.click();
+        if(sub.isEnabled()) 
+        	{	System.out.println("Form Submitted Succefully");	}
+        else 
+        	{	System.out.println("Form was Not Submitted");	}   
+//Browser Exit
+        Thread.sleep(4000);
+		driver.quit();
+}
+catch (Exception e) {		System.out.println("Please check the code again");		}
+finally {	System.out.println("This Code was written By S.Muthuprabhakaran"+"\n"+"Thank you");		}
+}
+}
